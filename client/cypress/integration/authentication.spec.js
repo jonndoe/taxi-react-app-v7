@@ -23,14 +23,8 @@ const logIn = () => {
 
 
 describe('Authentication', function () {
-  it('Can log in.', function () {
-    logIn();
-    cy.hash().should('eq', '#/');
-    cy.get('button').contains('Log out');
-  });
 
   it('Can sign up.', function () {
-    
     cy.server();
     cy.route({
       method: 'POST',
@@ -45,7 +39,6 @@ describe('Authentication', function () {
         'photo': '/media/images/photo.jpg'
       }
     }).as('signUp');
-
     cy.visit('/#/sign-up');
     cy.get('input#username').type('gary.cole@example.com');
     cy.get('input#firstName').type('Gary');
@@ -57,7 +50,13 @@ describe('Authentication', function () {
     cy.wait('@signUp');
     cy.hash().should('eq', '#/log-in');
   });
-  
+
+  it('Can log in.', function () {
+    logIn();
+    cy.hash().should('eq', '#/');
+    cy.get('button').contains('Log out');
+  });
+
   it('Cannot visit the login page when logged in.', function () {
     const { username, password } = Cypress.env('credentials');
     logIn();
