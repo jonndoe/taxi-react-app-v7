@@ -66,6 +66,7 @@ services:
       # chokidar (which wraps fs.watch, fs.watchFile, and fsevents) so that live
       # reloading will work.  
       - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_BASE_URL=http://localhost:8080
 
   taxi-nginx:
     build:
