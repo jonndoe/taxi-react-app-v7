@@ -1,0 +1,31 @@
+version: '3.7'
+
+# this file will start only postgresdb and redis server 
+# needed for developing
+
+
+services:
+
+  taxi-redis:
+    container_name: taxi-redis
+    image: redis:5.0.7-alpine
+
+  taxi-database:
+    environment:
+      POSTGRES_DB: taxi  # this will create new database with name 'taxi'
+      POSTGRES_USER: taxi  # this will create new user with name 'taxi'
+      POSTGRES_PASSWORD: taxi  # this will create new password for user we just created
+    container_name: taxi-database
+    image: postgres:12.1
+    ports:
+      - 5432:5432
+    volumes:
+      - taxi-database2:/var/lib/postgresql/data
+
+
+# recreate or rename your volume if we had role 'taxi' doesnot exit error....
+# so here we created new volume "taxi-database2".
+volumes:
+  taxi-database2:
+
+

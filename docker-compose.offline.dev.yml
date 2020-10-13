@@ -1,0 +1,88 @@
+version: '3.7'
+
+# this file will run all containers needed for development stage.
+
+services:
+
+  taxi-redis:
+    container_name: taxi-redis
+    image: redis:5.0.7-alpine
+
+  taxi-database:
+    environment:
+      POSTGRES_DB: taxi  # this will create new database with name 'taxi'
+      POSTGRES_USER: taxi  # this will create new user with name 'taxi'
+      POSTGRES_PASSWORD: taxi  # this will create new password for user we just created
+    container_name: taxi-database
+    image: postgres:12.1
+    ports:
+      - 5433:5432
+    volumes:
+      #- taxi-database:/var/lib/postgresql/data
+      - taxi-database2:/var/lib/postgresql/data
+
+  taxi-server-v7:
+    build:
+      context: ./server
+    volumes: 
+      - media:/usr/src/app/media
+      - static:/usr/src/app/static
+      # for hot-reload of container 
+      #!!! it does not update media & static folders in container!!!
+      # Because it is connected to the media & static volumes????????
+      - './server:/usr/src/app'
+    command: >
+      sh -c "python manage.py migrate &&
+             daphne --bind 0.0.0.0 --port 8000 taxi.asgi:application"
+    container_name: taxi-server-v7
+    depends_on:
+      - taxi-redis
+      - taxi-database
+    env_file:
+      - ./server/dev.env
+    ports:
+      - 8001:8000
+
+
+  taxi-client-v7:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    command: npm start
+    container_name: taxi-client-v7
+    depends_on:
+      - taxi-server-v7
+    ports:
+      - 30001:3000
+    # this volumes added for hot reload when developing.
+    volumes:
+      # copy from local to container
+      - './client:/usr/src/app'
+      # copy from container to local
+      #- '/usr/src/app/node_modules'
+    # this is also for hot-reload when developing.
+    environment:
+      # The CHOKIDAR_USEPOLLING=true environment variables enable a polling mechanism via 
+      # chokidar (which wraps fs.watch, fs.watchFile, and fsevents) so that live
+      # reloading will work.  
+      - CHOKIDAR_USEPOLLING=true
+
+  taxi-nginx:
+    build:
+      context: ./nginx
+    container_name: taxi-nginx
+    depends_on:
+      - taxi-server-v7
+      - taxi-client-v7
+    ports:
+      - 8080:80
+    restart: always
+    volumes:
+      - media:/usr/src/app/media
+      - static:/usr/src/app/static
+
+
+volumes:
+  taxi-database2:
+  media:
+  static:
