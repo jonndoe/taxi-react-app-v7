@@ -7,8 +7,12 @@ WORKDIR /usr/src/app
 
 COPY ./requirements.txt /usr/src/app
 
+
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+
+COPY ./requirements.cors.txt /usr/src/app
+RUN pip install -r requirements.cors.txt
 
 COPY . /usr/src/app
 
