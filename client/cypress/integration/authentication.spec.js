@@ -1,3 +1,12 @@
+const faker = require('faker');
+const randomEmail = faker.internet.email();
+
+
+
+
+
+
+
 const logIn = () => {
   const { username, password } = Cypress.env('credentials');
 
@@ -7,7 +16,7 @@ const logIn = () => {
 
   // Log into the app.
   cy.visit('/#/log-in');
-  cy.get('input#username').type(username);
+  cy.get('input#username').type(randomEmail);
   cy.get('input#password').type(password, { log: false });
   cy.get('button').contains('Log in').click();
   cy.wait('@logIn');
@@ -20,7 +29,7 @@ describe('Authentication', function () {
     cy.server();
     cy.route('POST','**/api/sign_up/**').as('signUp');
     cy.visit('/#/sign-up');
-    cy.get('input#username').type('gary.cole@example.com');
+    cy.get('input#username').type(randomEmail);
     cy.get('input#firstName').type('Gary');
     cy.get('input#lastName').type('Cole');
     cy.get('input#password').type('pAssw0rd', { log: false });
@@ -73,7 +82,7 @@ describe('Authentication', function () {
       }
     }).as('logIn');
     cy.visit('/#/log-in');
-    cy.get('input#username').type(username);
+    cy.get('input#username').type(randomEmail);
     cy.get('input#password').type(password, { log: false });
     cy.get('button').contains('Log in').click();
     cy.wait('@logIn');
@@ -107,7 +116,7 @@ describe('Authentication', function () {
       }
     }).as('signUp');
     cy.visit('/#/sign-up');
-    cy.get('input#username').type('gary.cole@example.com');
+    cy.get('input#username').type(randomEmail);
     cy.get('input#firstName').type('Gary');
     cy.get('input#lastName').type('Cole');
     cy.get('input#password').type('pAssw0rd', { log: false });
