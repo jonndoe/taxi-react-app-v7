@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+
 import { Button, Form, Container, Navbar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Route, Link, Switch, Redirect } from 'react-router-dom';
+
 import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
+import Driver from './components/Driver.js';
+import Rider from './components/Rider.js';
+
 import './App.css';
 
-import axios from 'axios';
+
+
+
 
 function App () {
 
@@ -89,6 +97,12 @@ function App () {
             ) : (
               <LogIn logIn={logIn} />
             )
+          )} />
+          <Route path='/driver' render={() => (
+            <Driver />
+          )} />
+          <Route path='/rider' render={() => (
+            <Rider />
           )} />
         </Switch>
       </Container>
