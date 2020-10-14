@@ -63,18 +63,23 @@ function Rider (props) {
           <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
           <Breadcrumb.Item active>Dashboard</Breadcrumb.Item>
         </Breadcrumb>
-        <Card className='mb-3'>
-          <Card.Header>Current Trip</Card.Header>
-          <Card.Body>
-            No trips.
-          </Card.Body>
-        </Card>
-        <Card className='mb-3'>
-          <Card.Header>Recent Trips</Card.Header>
-          <Card.Body>
-            No trips.
-          </Card.Body>
-        </Card>
+
+        <TripCard
+          title='Current Trip'
+          trips={getCurrentTrips()}
+          group='rider'
+          otherGroup='driver'
+        />
+        
+        
+        <TripCard
+          title='Recent Trips'
+          trips={getCompletedTrips()}
+          group='rider'
+          otherGroup='driver'
+        />
+
+
       </Col>
     </Row>
   );

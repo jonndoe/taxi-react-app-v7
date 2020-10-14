@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import { Button, Form, Container, Navbar } from 'react-bootstrap';
+import { Button, Form, Container, Navbar, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Route, Link, Switch, Redirect } from 'react-router-dom';
 
@@ -9,9 +9,7 @@ import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
 import Driver from './components/Driver.js';
 import Rider from './components/Rider.js';
-import { isDriver } from "./services/AuthService";
-import { isRider } from "./services/AuthService";
-import { getUser } from "./services/AuthService";
+import { isDriver, isRider, getUser } from "./services/AuthService";
 
 import './App.css';
 
@@ -61,10 +59,10 @@ function App () {
 
           {
             isLoggedIn &&
-            <Container inline className='ml-5'>
+            <Container inline className='ml-auto'>
               <ul className='navbar-nav mr-autom'>
                 <li className="nav-item active">
-                  <div className="nav-link" ><h5>{ user.username }<span className="sr-only">(current)</span></h5></div>
+                  <div className="nav-link" >{ user.username } is {group}<span className="sr-only">(current)</span></div>
                 </li>
               </ul>
             </Container>
@@ -72,10 +70,6 @@ function App () {
           {
             isLoggedIn &&
             <Form inline className='ml-auto'>
-              { isDriver()?
-                  <Link to='/driver'><Button type='button'>Dashboard</Button></Link>:
-                  <Link to='/rider'><Button type='button'>Dashboard</Button></Link>
-              }
               <Button type='button' onClick={() => logOut()}>Log out</Button>
             </Form>
           }
@@ -87,20 +81,36 @@ function App () {
             <div className='middle-center'>
               <h1 className='landing logo'>Taxi</h1>
               {
-                !isLoggedIn &&
-                <Link
-                  id='signUp'
-                  className='btn btn-primary'
-                  to='/sign-up'
-                >Sign up</Link>
+                !isLoggedIn && (
+                  <>
+                    <Link
+                      id='signUp'
+                      className='btn btn-primary'
+                      to='/sign-up'
+                    >Sign up</Link>
+                    <Link
+                      id='logIn'
+                      className='btn btn-primary'
+                      to='/log-in'
+                    >Log in</Link>
+                  </>
+                )
               }
               {
-                !isLoggedIn &&
-                <Link
-                  id='logIn'
-                  className='btn btn-primary'
-                  to='/log-in'
-                >Log in</Link>
+                isRider() && (
+                  <Link
+                    className='btn btn-primary'
+                    to='/rider'
+                  >Dashboard</Link>
+                )
+              }
+              {
+                isDriver() && (
+                  <Link
+                    className='btn btn-primary'
+                    to='/driver'
+                  >Dashboard</Link>
+                )
               }
             </div>
           )} />
