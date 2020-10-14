@@ -9,6 +9,9 @@ import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
 import Driver from './components/Driver.js';
 import Rider from './components/Rider.js';
+import { isDriver } from "./services/AuthService";
+import { isRider } from "./services/AuthService";
+import { getUser } from "./services/AuthService";
 
 import './App.css';
 
@@ -44,18 +47,35 @@ function App () {
     }
   };
 
+  const group = isRider()? 'rider': 'driver';
+  const user = getUser();
 
   return (
     <div>
-      <Navbar bg='light' expand='lg' variant='light'>
+      <Navbar bg='dark' expand='lg' variant='dark'>
         <LinkContainer to='/'>
           <Navbar.Brand className='logo'>Taxiyy</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle />
         <Navbar.Collapse>
+
+          {
+            isLoggedIn &&
+            <Container inline className='ml-5'>
+              <ul className='navbar-nav mr-autom'>
+                <li className="nav-item active">
+                  <div className="nav-link" ><h5>{ user.username }<span className="sr-only">(current)</span></h5></div>
+                </li>
+              </ul>
+            </Container>
+          }
           {
             isLoggedIn &&
             <Form inline className='ml-auto'>
+              { isDriver()?
+                  <Link to='/driver'><Button type='button'>Dashboard</Button></Link>:
+                  <Link to='/rider'><Button type='button'>Dashboard</Button></Link>
+              }
               <Button type='button' onClick={() => logOut()}>Log out</Button>
             </Form>
           }
