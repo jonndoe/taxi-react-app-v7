@@ -4,7 +4,15 @@ import {
   Breadcrumb, Card, Col, Row
 } from 'react-bootstrap';
 
+import { Redirect } from 'react-router-dom';
+import { isRider } from "../services/AuthService";
+
 function Rider (props) {
+
+  if (!isRider()) {
+      return <Redirect to='/' />
+  }
+
   return (
     <Row>
       <Col lg={12}>
