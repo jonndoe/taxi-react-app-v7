@@ -67,6 +67,17 @@ function App () {
               </ul>
             </Container>
           }
+
+          {
+            isRider() && (
+              <Nav className='mr-auto'>
+                <LinkContainer to='/rider/request'>
+                  <Nav.Link>Request a trip</Nav.Link>
+                </LinkContainer>
+              </Nav>
+            )
+          }
+
           {
             isLoggedIn &&
             <Form inline className='ml-auto'>
