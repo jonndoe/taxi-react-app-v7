@@ -34,4 +34,29 @@ describe('The driver dashboard', function () {
     cy.hash().should('eq', '#/driver');
   })
 
+  it('Displays messages for no trips', function () {
+    cy.server();
+    cy.route({
+      method: 'GET',
+      url: '**/api/trip/',
+      status: 200,
+      response: []
+    }).as('getTrips');
+
+    cy.logIn(riderEmail);
+
+    cy.visit('/#/rider');
+    cy.wait('@getTrips');
+
+    // Current trips.
+    cy.get('[data-cy=trip-card]')
+      .eq(0)
+      .contains('No trips.');
+
+    // Completed trips.
+    cy.get('[data-cy=trip-card]')
+      .eq(1)
+      .contains('No trips.');
+  })
+
 })
