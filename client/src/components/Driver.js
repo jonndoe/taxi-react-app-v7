@@ -1,89 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Breadcrumb, Card, Col, Row
-} from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
-
-
-import TripCard from './TripCard';
-
-import { isDriver } from "../services/AuthService";
-import { getTrips } from "../services/TripService";
+import React from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import DriverDashboard from './DriverDashboard';
+import DriverDetail from './DriverDetail';
+import { isDriver } from '../services/AuthService';
 
 function Driver (props) {
-
-  const [trips, setTrips] = useState([]);
-
-  // new
-  useEffect(() => {
-    const loadTrips = async () => {
-      const { response, isError } = await getTrips();
-      if (isError) {
-        setTrips([]);
-      } else {
-        setTrips(response.data);
-      }
-    }
-    loadTrips();
-  }, []);
-
   if (!isDriver()) {
     return <Redirect to='/' />
   }
 
-  // new
-  const getCurrentTrips = () => {
-    return trips.filter(trip => {
-      return trip.driver !== null && trip.status !== 'COMPLETED';
-    });
-  }
-
-  // new
-  const getRequestedTrips = () => {
-    return trips.filter(trip => {
-      return trip.status === 'REQUESTED';
-    });
-  }
-
-  // new
-  const getCompletedTrips = () => {
-    return trips.filter(trip => {
-      return trip.status === 'COMPLETED';
-    });
-  }
-
   return (
-    <Row>
-      <Col lg={12}>
-        <Breadcrumb>
-          <Breadcrumb.Item href='/'>Home</Breadcrumb.Item>
-          <Breadcrumb.Item active>Dashboard</Breadcrumb.Item>
-        </Breadcrumb>
-
-        <TripCard
-          title='Current Trip'
-          trips={getCurrentTrips()}
-          group='driver'
-          otherGroup='rider'
-        />
-
-        <TripCard
-          title='Requested Trips'
-          trips={getRequestedTrips()}
-          group='driver'
-          otherGroup='rider'
-        />
-
-        <TripCard
-          title='Recent Trips'
-          trips={getCompletedTrips()}
-          group='driver'
-          otherGroup='rider'
-        />
-
-      </Col>
-    </Row>
+    <Switch>
+      <Route path='/driver/:id' component={DriverDetail} />
+      <Route component={DriverDashboard} />
+    </Switch>
   );
 }
 
 export default Driver;
+
