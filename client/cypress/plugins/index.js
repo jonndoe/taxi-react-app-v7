@@ -2,6 +2,7 @@ const knex = require('knex');
 
 module.exports = (on, config) => {
   on('task', {
+    // doesnt really work, to be fixed.
     async tableTruncate ({ table }) {
       const client = await knex({
         client: 'pg',

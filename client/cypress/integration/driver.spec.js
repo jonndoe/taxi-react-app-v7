@@ -141,6 +141,7 @@ describe('The driver dashboard', function () {
       cy.hash().should('eq', '#/rider');
     });
 
+    // This test does not work, to be fixed.
     it('Can receive a ride request', function () {
 
       // fake response from server with empty values
