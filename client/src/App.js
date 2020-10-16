@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Button, Form, Container, Navbar, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Route, Link, Switch, Redirect } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
@@ -11,6 +12,8 @@ import Driver from './components/Driver.js';
 import Rider from './components/Rider.js';
 import { isDriver, isRider, getUser } from "./services/AuthService";
 
+
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 
 
@@ -147,6 +150,9 @@ function App () {
           )} />
         </Switch>
       </Container>
+
+      <ToastContainer />
+
     </div>
   );
 }
