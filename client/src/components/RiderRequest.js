@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { webSocket } from 'rxjs/webSocket';
 
-import Map from './Map';
+import MapOSM from "./MapOSM";
 
 import { getAccessToken, getUser } from '../services/AuthService';
 
@@ -86,12 +86,7 @@ function RiderRequest (props) {
                     />
                   </Form.Group>
 
-                  <Map
-                    lat={lat}
-                    lng={lng}
-                    zoom={13}
-                  />
-
+                  <MapOSM />
 
                   <Form.Group controlId='dropOffAddress'>
                     <Form.Label>Drop off address:</Form.Label>
