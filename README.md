@@ -11,7 +11,9 @@ NO DOCKER RUN: checked. works. backend tests passed.
 
 DOCKER RUN: checked, works. backend tests passed. Fronted tests passed.
   - `sudo docker-compose -f docker-compose.offline.dev.yml up --build` # run all you need in one shot.
-
+  - `cd client`                                                        # cd to client for cypress testing
+  - `conda activate env_node_react`                                    # activate env
+  - `npx cypress open`                                                 # start cypress
 
 Clean the test database after each Cypress test run:
 - `sudo docker-compose -f docker-compose.offline.dev.yml exec taxi-database psql -U taxi -d taxi`
@@ -19,4 +21,4 @@ Clean the test database after each Cypress test run:
 
 
 If have some errors while running the tests:
- - try to clean up the volumes with docker.
+ - erase all docker volumes, and start containers up again.

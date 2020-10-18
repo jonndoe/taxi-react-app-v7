@@ -53,7 +53,7 @@ function App () {
 
   return (
     <div>
-      <Navbar bg='dark' expand='lg' variant='dark'>
+      <Navbar bg='light' expand='lg' variant='light'>
         <LinkContainer to='/'>
           <Navbar.Brand className='logo'>Taxiyy</Navbar.Brand>
         </LinkContainer>
@@ -62,13 +62,21 @@ function App () {
 
           {
             isLoggedIn &&
-            <Container inline className='ml-auto'>
-              <ul className='navbar-nav mr-autom'>
-                <li className="nav-item active">
-                  <div className="nav-link" >{ user.username } is {group}<span className="sr-only">(current)</span></div>
-                </li>
-              </ul>
-            </Container>
+            <Nav className='mr-auto'>
+                <Nav.Link className="nav-item active">
+                  { user.username } is {group}<span className="sr-only">(current)</span>
+                </Nav.Link>
+            </Nav>
+          }
+
+          {
+            isRider() && (
+              <Nav className='mr-auto'>
+                <LinkContainer to='/rider/request'>
+                  <Button type='button'>Request a trip</Button>
+                </LinkContainer>
+              </Nav>
+            )
           }
 
           {
