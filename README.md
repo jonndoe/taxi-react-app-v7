@@ -16,3 +16,7 @@ DOCKER RUN: checked, works. backend tests passed. Fronted tests passed.
 Clean the test database after each Cypress test run:
 - `sudo docker-compose -f docker-compose.offline.dev.yml exec taxi-database psql -U taxi -d taxi`
 - `TRUNCATE trips_user CASCADE;`
+
+
+If have some errors while running the tests:
+ - try to clean up the volumes with docker.
