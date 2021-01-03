@@ -33,7 +33,7 @@ function MapOSM (props) {
 
 
       <LeafletMap
-        center={[50, 10]}
+        center={[54, 20.4]}
         zoom={6}
         maxZoom={10}
         attributionControl={true}
@@ -59,3 +59,10 @@ function MapOSM (props) {
 }
 
 export default MapOSM;
+
+//url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+
+
+
+
+

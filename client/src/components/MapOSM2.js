@@ -59,3 +59,7 @@ export default class EventsExample extends Component<{}, State> {
     )
   }
 }
+
+
+//var newLayer = new OpenLayers.Layer.OSM("New Layer", "URL_TO_TILES/${z}/${x}/${y}.png", {numZoomLevels: 19});
+//map.addLayer(newLayer);

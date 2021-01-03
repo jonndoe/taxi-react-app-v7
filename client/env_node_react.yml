@@ -1,0 +1,10 @@
+name: env_node_react
+channels:
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1=main
+  - libgcc-ng=9.1.0=hdf63c60_0
+  - libstdcxx-ng=9.1.0=hdf63c60_0
+  - nodejs=10.13.0=he6710b0_0
+prefix: /home/habrauser/miniconda3/envs/env_node_react
+
